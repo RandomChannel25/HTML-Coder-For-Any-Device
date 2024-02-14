@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Coding</title>
+    
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/premium-photo/3d-rendering-background-based-binary-code-technology_232104-2465.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+
+        p {
+            text-shadow: 1px 0 0 black, 0 -1px 0 black, -1px 0 0 black, 0 1px 0 black;
+            display: inline;
+        }
+
+        textarea {
+            width: 80%;
+            height: 70vh;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 16px;
+            outline: white solid;
+            background-color: black;
+            color: #4197f8;
+            font-weight: bold;
+        }
+
+        textarea::placeholder {
+            font-size: 50px; /* Increased placeholder text size */
+            text-align: center;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2a8eff;
+        }
+
+        input {
+            margin: 10px;
+            padding: 5px;
+            font-size: 16px;
+            color: white;
+            text-shadow: 1px 0 0 black, 0 -1px 0 black, -1px 0 0 black, 0 1px 0 black;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #WARNING {
+            position: absolute;
+            font-size: 30px;
+            top: -14px;
+            right: 20px;
+            color: red;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+    <p id="WARNING">NO COPYING</p>
+    <label for="file-name"><p>Enter File Name: </p></label>
+    <input type="text" id="file-name"><label for="file-name"><p>.html</p></label><br>
+    <textarea id="html-code" rows="10" cols="50" placeholder="Enter your HTML code here"><!DOCTYPE html>
+<html>
+<head>
+<title>(Page Title)</title>
+<style>
+
+</style>
+<head>
+<body>
+</body>
+<script>
+
+</script>
+</html></textarea><br>
+    <input type="file" id="file-input" style="display: none;"><br>
+    <button onclick="document.getElementById('file-input').click()">Import HTML File</button>
+    <button onclick="downloadHtml()">Download</button>
+    <button onclick="testCode()">Test Code</button>
+
+    <script>
+        document.getElementById('file-input').addEventListener('change', function() {
+            var file = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('html-code').value = e.target.result;
+            };
+            reader.readAsText(file);
+        });
+
+        function downloadHtml() {
+            const fileName = document.getElementById('file-name').value + '.html';
+            const htmlCode = document.getElementById('html-code').value;
+            const blob = new Blob([htmlCode], {type: 'text/html'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+
+        function testCode() {
+            const htmlCode = document.getElementById('html-code').value;
+            const newTab = window.open();
+            newTab.document.write(htmlCode);
+        }
+    </script>
+</body>
+</html>
